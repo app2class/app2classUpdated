@@ -60,6 +60,8 @@ import Assignments from './pages/Assignments';
 import Messages from './pages/Messages';
 import RightsGuardian from './pages/RightsGuardian';
 import ParentDashboard from './pages/ParentDashboard';
+import LiveLesson from './pages/LiveLesson';
+import ClassOverview from './pages/ClassOverview';
 import __Layout from './Layout.jsx';
 
 
@@ -77,6 +79,8 @@ export const PAGES = {
     "Messages": Messages,
     "RightsGuardian": RightsGuardian,
     "ParentDashboard": ParentDashboard,
+    "LiveLesson": LiveLesson,
+    "ClassOverview": ClassOverview,
 }
 
 export const pagesConfig = {
