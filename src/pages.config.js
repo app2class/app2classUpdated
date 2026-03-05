@@ -50,12 +50,16 @@
 import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import AdminLogin from './pages/AdminLogin';
+import AdminApprovals from './pages/AdminApprovals';
 
 
 export const PAGES = {
     "Landing": Landing,
     "Register": Register,
     "Dashboard": Dashboard,
+    "AdminLogin": AdminLogin,
+    "AdminApprovals": AdminApprovals,
 }
 
 export const pagesConfig = {
