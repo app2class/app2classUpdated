@@ -52,6 +52,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AdminLogin from './pages/AdminLogin';
 import AdminApprovals from './pages/AdminApprovals';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -65,4 +66,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Landing",
     Pages: PAGES,
+    Layout: __Layout,
 };
