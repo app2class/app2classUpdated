@@ -62,6 +62,7 @@ import RightsGuardian from './pages/RightsGuardian';
 import ParentDashboard from './pages/ParentDashboard';
 import LiveLesson from './pages/LiveLesson';
 import ClassOverview from './pages/ClassOverview';
+import Profile from './pages/Profile';
 import __Layout from './Layout.jsx';
 
 
@@ -81,6 +82,7 @@ export const PAGES = {
     "ParentDashboard": ParentDashboard,
     "LiveLesson": LiveLesson,
     "ClassOverview": ClassOverview,
+    "Profile": Profile,
 }
 
 export const pagesConfig = {
