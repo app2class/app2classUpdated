@@ -54,6 +54,8 @@ import AdminLogin from './pages/AdminLogin';
 import AdminApprovals from './pages/AdminApprovals';
 import StudentRoadmap from './pages/StudentRoadmap';
 import SubjectHubs from './pages/SubjectHubs';
+import Grades from './pages/Grades';
+import Attendance from './pages/Attendance';
 import __Layout from './Layout.jsx';
 
 
@@ -65,6 +67,8 @@ export const PAGES = {
     "AdminApprovals": AdminApprovals,
     "StudentRoadmap": StudentRoadmap,
     "SubjectHubs": SubjectHubs,
+    "Grades": Grades,
+    "Attendance": Attendance,
 }
 
 export const pagesConfig = {
