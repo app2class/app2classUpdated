@@ -58,6 +58,8 @@ import Grades from './pages/Grades';
 import Attendance from './pages/Attendance';
 import Assignments from './pages/Assignments';
 import Messages from './pages/Messages';
+import RightsGuardian from './pages/RightsGuardian';
+import ParentDashboard from './pages/ParentDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -73,6 +75,8 @@ export const PAGES = {
     "Attendance": Attendance,
     "Assignments": Assignments,
     "Messages": Messages,
+    "RightsGuardian": RightsGuardian,
+    "ParentDashboard": ParentDashboard,
 }
 
 export const pagesConfig = {
