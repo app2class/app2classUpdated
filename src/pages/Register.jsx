@@ -101,7 +101,14 @@ export default function Register() {
         coordinator_subject: form.coordinator_subject,
         counselor_grades: counselorGrades.filter(g => g),
       }),
-      approver_role: roleType === "student" ? "homeroom_teacher" : roleType === "parent" ? "homeroom_teacher" : "management",
+      // Hierarchy: management approves staff (except homeroom_teacher who needs grade_coordinator)
+      // grade_coordinator approves homeroom_teacher
+      // homeroom_teacher approves student + parent
+      approver_role: (() => {
+        if (roleType === "student" || roleType === "parent") return "homeroom_teacher";
+        if (selectedRoles.includes("homeroom_teacher")) return "grade_coordinator";
+        return "management";
+      })(),
     };
     await base44.entities.Registration.create(registrationData);
     setSubmitted(true);
