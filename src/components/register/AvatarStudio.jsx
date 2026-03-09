@@ -122,6 +122,8 @@ function inlineSvg(raw) {
   return raw.replace(/<svg/, '<svg style="width:100%;height:100%;object-fit:contain"');
 }
 
+const FACE_URL = BASE_URL + "base%20face.svg";
+
 function AvatarPreview({ avatar }) {
   const eyeColorKey = avatar.eye_color || "brown";
   const hairStyleKey = avatar.hair_style || "boy";
@@ -134,23 +136,33 @@ function AvatarPreview({ avatar }) {
   const bodyUrl = url(eyeEntry.file);
   const hairUrl = hairEntry.file ? url(hairEntry.file) : null;
 
+  const faceSvg = useSvg(FACE_URL);
   const bodySvg = useSvg(bodyUrl);
   const hairSvg = useHairSvg(hairUrl, hairColor);
   const skinFilter = SKIN_CSS_FILTER[skinColor] || SKIN_CSS_FILTER["#F5C5A3"];
 
   return (
     <div className="flex flex-col items-center gap-2">
-      {/* White background so mix-blend-mode:multiply works correctly */}
       <div className="relative w-44 h-44 flex items-center justify-center bg-white rounded-2xl overflow-hidden shadow-md">
-        {bodySvg ? (
+        {/* Layer 1: Face skin */}
+        {faceSvg ? (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
             style={{ filter: skinFilter }}
-            dangerouslySetInnerHTML={{ __html: inlineSvg(bodySvg) }}
+            dangerouslySetInnerHTML={{ __html: inlineSvg(faceSvg) }}
           />
         ) : (
           <div className="w-16 h-16 rounded-full bg-gray-100 animate-pulse" />
         )}
+        {/* Layer 2: Body + eyes */}
+        {bodySvg && (
+          <div
+            className="absolute inset-0 w-full h-full flex items-center justify-center"
+            style={{ mixBlendMode: "multiply" }}
+            dangerouslySetInnerHTML={{ __html: inlineSvg(bodySvg) }}
+          />
+        )}
+        {/* Layer 3: Hair */}
         {hairSvg && (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
