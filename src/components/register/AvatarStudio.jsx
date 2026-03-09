@@ -49,29 +49,60 @@ const SKIN_COLORS = [
   { label: "כהה מאוד",  hex: "#4A2912" },
 ];
 
-// Default skin color assumed in SVG files
-const DEFAULT_SKIN = "#FDDBB4";
+// Known skin tones used in the SVG files
+const SKIN_HEX_VARIANTS = [
+  "FDDBB4", "F5C5A3", "EAB88C", "E8B48A", "F2C18C", "EDBD9A",
+  "D4956A", "C8885F", "C68642", "A0693A", "8D5524", "4A2912",
+  // common SVG skin palette
+  "FFD5B0", "FFCBA4", "F7C59F", "F0B27A", "E59866", "CA9B6E",
+  "BA8D6A", "A97C50", "8B6143", "6F4E37",
+];
+
+// Known hair colors used in SVG files
+const HAIR_HEX_VARIANTS = [
+  "3D2314", "4A2E1A", "5C3317", "6B3A2A", "7B4F3A",
+  "8B4513", "704214", "5D3010", "2C1810", "1A0F0A",
+  "3B2314", "6B4226", "8B6348",
+];
 
 function url(filename) {
   return BASE_URL + encodeURIComponent(filename);
 }
 
-function useSvgWithSkin(svgUrl, skinColor) {
+function replaceSvgColors(text, skinColor, hairColor) {
+  let result = text;
+  const skinHex = skinColor.replace("#", "").toUpperCase();
+  const hairHex = hairColor ? hairColor.replace("#", "").toUpperCase() : null;
+
+  // Replace skin tones
+  for (const variant of SKIN_HEX_VARIANTS) {
+    const upper = variant.toUpperCase();
+    result = result.replace(new RegExp(`#${upper}`, "gi"), skinColor);
+    result = result.replace(new RegExp(`${upper}(?=[^a-fA-F0-9]|$)`, "g"), skinHex);
+  }
+
+  // Replace hair colors
+  if (hairHex) {
+    for (const variant of HAIR_HEX_VARIANTS) {
+      const upper = variant.toUpperCase();
+      result = result.replace(new RegExp(`#${upper}`, "gi"), hairColor);
+      result = result.replace(new RegExp(`${upper}(?=[^a-fA-F0-9]|$)`, "g"), hairHex);
+    }
+  }
+
+  return result;
+}
+
+function useSvgWithColors(svgUrl, skinColor, hairColor) {
   const [svgContent, setSvgContent] = useState("");
 
   useEffect(() => {
     if (!svgUrl) { setSvgContent(""); return; }
     fetch(svgUrl)
       .then(r => r.text())
-      .then(text => {
-        // Replace default skin color with selected skin color (case insensitive)
-        const replaced = text
-          .replace(new RegExp(DEFAULT_SKIN.replace("#", "#?"), "gi"), skinColor)
-          .replace(/FDDBB4/gi, skinColor.replace("#", ""));
-        setSvgContent(replaced);
-      })
+      .then(text => setSvgContent(replaceSvgColors(text, skinColor, hairColor)))
       .catch(() => setSvgContent(""));
-  }, [svgUrl, skinColor]);
+  }, [svgUrl, skinColor, hairColor]);
 
   return svgContent;
 }
