@@ -78,6 +78,7 @@ const ROLE_DASHBOARDS = {
       { icon: Calendar, label: "לוח מבחנים שכבתי", page: "GradeExams", color: "bg-orange-500" },
       { icon: Users, label: "ניהול מחנכים", page: "HomeroomManagement", color: "bg-purple-500" },
       { icon: BookOpen, label: "תגבורים", page: "Tutoring", color: "bg-green-500" },
+      { icon: CheckCircle2, label: "אישורי מחנכים", page: "Approvals", color: "bg-purple-500" },
     ]
   },
   subject_coordinator: {
