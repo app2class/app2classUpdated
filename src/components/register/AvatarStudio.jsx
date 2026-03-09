@@ -144,8 +144,8 @@ function AvatarPreview({ avatar }) {
   const faceFilename = FACE_SVG_MAP[faceType];
   const hairFilename = HAIR_SVG_MAP[faceType]?.[hairStyle] || null;
 
-  const faceSvg = useSvgWithColors(faceFilename ? url(faceFilename) : null, skinColor, hairColor);
-  const hairSvg = useSvgWithColors(hairFilename ? url(hairFilename) : null, skinColor, hairColor);
+  const faceSvg = useFaceSvg(faceFilename ? url(faceFilename) : null, skinColor);
+  const hairSvg = useHairSvg(hairFilename ? url(hairFilename) : null, hairColor);
 
   return (
     <div className="flex flex-col items-center gap-2">
