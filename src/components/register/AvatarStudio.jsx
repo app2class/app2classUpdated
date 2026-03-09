@@ -71,12 +71,18 @@ function hexToRgb(hex) {
 // Face SVGs contain embedded PNG images — we use CSS filter to tint skin tone
 // Base face has a light-peach skin tone baked in
 const SKIN_CSS_FILTER = {
+  "#FEECD2": "brightness(1.15) saturate(0.6)",
   "#FDDBB4": "brightness(1.08) saturate(0.8)",
   "#F5C5A3": "brightness(1.0) saturate(1.0)",
+  "#EEB98A": "sepia(0.2) saturate(1.2) brightness(0.95)",
   "#E0AC69": "sepia(0.3) saturate(1.4) brightness(0.9)",
+  "#D4915A": "sepia(0.4) saturate(1.6) brightness(0.84)",
   "#C68642": "sepia(0.55) saturate(2) brightness(0.78)",
+  "#A0622A": "sepia(0.65) saturate(2.1) brightness(0.66)",
   "#8D5524": "sepia(0.75) saturate(2.2) brightness(0.55)",
+  "#6B3A1F": "sepia(0.85) saturate(2.1) brightness(0.44)",
   "#4A2912": "sepia(0.9) saturate(2) brightness(0.32)",
+  "#2D1A0E": "sepia(1) saturate(1.8) brightness(0.2)",
 };
 
 // For hair SVGs: replace ALL colored fills with hair color (keep only near-black outlines)
