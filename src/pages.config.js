@@ -47,42 +47,42 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import Landing from './pages/Landing';
-import Register from './pages/Register';
-import Dashboard from './pages/Dashboard';
-import AdminLogin from './pages/AdminLogin';
 import AdminApprovals from './pages/AdminApprovals';
+import AdminLogin from './pages/AdminLogin';
+import Assignments from './pages/Assignments';
+import Attendance from './pages/Attendance';
+import ClassOverview from './pages/ClassOverview';
+import Dashboard from './pages/Dashboard';
+import Grades from './pages/Grades';
+import Landing from './pages/Landing';
+import LiveLesson from './pages/LiveLesson';
+import Messages from './pages/Messages';
+import ParentDashboard from './pages/ParentDashboard';
+import Profile from './pages/Profile';
+import Register from './pages/Register';
+import RightsGuardian from './pages/RightsGuardian';
 import StudentRoadmap from './pages/StudentRoadmap';
 import SubjectHubs from './pages/SubjectHubs';
-import Grades from './pages/Grades';
-import Attendance from './pages/Attendance';
-import Assignments from './pages/Assignments';
-import Messages from './pages/Messages';
-import RightsGuardian from './pages/RightsGuardian';
-import ParentDashboard from './pages/ParentDashboard';
-import LiveLesson from './pages/LiveLesson';
-import ClassOverview from './pages/ClassOverview';
-import Profile from './pages/Profile';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "Landing": Landing,
-    "Register": Register,
-    "Dashboard": Dashboard,
-    "AdminLogin": AdminLogin,
     "AdminApprovals": AdminApprovals,
+    "AdminLogin": AdminLogin,
+    "Assignments": Assignments,
+    "Attendance": Attendance,
+    "ClassOverview": ClassOverview,
+    "Dashboard": Dashboard,
+    "Grades": Grades,
+    "Landing": Landing,
+    "LiveLesson": LiveLesson,
+    "Messages": Messages,
+    "ParentDashboard": ParentDashboard,
+    "Profile": Profile,
+    "Register": Register,
+    "RightsGuardian": RightsGuardian,
     "StudentRoadmap": StudentRoadmap,
     "SubjectHubs": SubjectHubs,
-    "Grades": Grades,
-    "Attendance": Attendance,
-    "Assignments": Assignments,
-    "Messages": Messages,
-    "RightsGuardian": RightsGuardian,
-    "ParentDashboard": ParentDashboard,
-    "LiveLesson": LiveLesson,
-    "ClassOverview": ClassOverview,
-    "Profile": Profile,
 }
 
 export const pagesConfig = {

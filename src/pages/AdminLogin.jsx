@@ -11,7 +11,10 @@ export default function AdminLogin() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (form.email === "admin@il" && form.password === "123456") {
+    const email = form.email.trim().toLowerCase();
+    const pass = form.password;
+    if ((email === "admin@il" || email === "admin") && pass === "123456") {
+      sessionStorage.setItem("adminLoggedIn", "true");
       navigate(createPageUrl("AdminApprovals"));
     } else {
       setError("פרטי כניסה שגויים");
