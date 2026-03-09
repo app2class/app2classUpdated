@@ -82,6 +82,8 @@ function hexToRgb(hex) {
 }
 
 function replaceHairColors(text, hairColor) {
+  // Replace ALL non-white, non-skin colors with the chosen hair color
+  // White/near-white (background fills) are kept, everything else becomes hair color
   const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
   const found = new Set();
   let m;
@@ -89,8 +91,9 @@ function replaceHairColors(text, hairColor) {
   let result = text;
   for (const hex of found) {
     const { r, g, b } = hexToRgb(hex);
-    const sum = r + g + b;
-    if (sum >= 80 && !(r > 230 && g > 230 && b > 230)) {
+    const isWhiteOrNearWhite = r > 240 && g > 240 && b > 240;
+    const isSkinLike = r > 200 && g > 160 && b > 120 && r > g && g > b;
+    if (!isWhiteOrNearWhite && !isSkinLike) {
       result = result.replace(new RegExp(`#${hex}`, "gi"), hairColor);
     }
   }
