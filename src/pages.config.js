@@ -63,6 +63,7 @@ import Register from './pages/Register';
 import RightsGuardian from './pages/RightsGuardian';
 import StudentRoadmap from './pages/StudentRoadmap';
 import SubjectHubs from './pages/SubjectHubs';
+import Approvals from './pages/Approvals';
 import __Layout from './Layout.jsx';
 
 
@@ -83,6 +84,7 @@ export const PAGES = {
     "RightsGuardian": RightsGuardian,
     "StudentRoadmap": StudentRoadmap,
     "SubjectHubs": SubjectHubs,
+    "Approvals": Approvals,
 }
 
 export const pagesConfig = {
