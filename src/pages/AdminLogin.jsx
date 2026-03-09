@@ -38,7 +38,8 @@ export default function AdminLogin() {
               <label className="text-white/80 text-sm mb-1 block">אימייל</label>
               <input type="text" value={form.email} onChange={e => setForm({...form, email: e.target.value})}
                 className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-yellow-400"
-                placeholder="admin@il" />
+                placeholder="admin@il"
+                autoComplete="off" />
             </div>
             <div>
               <label className="text-white/80 text-sm mb-1 block">סיסמה</label>
