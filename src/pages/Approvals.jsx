@@ -41,8 +41,39 @@ export default function Approvals() {
   const loadRegistrations = async (role) => {
     setLoading(true);
     const all = await base44.entities.Registration.list("-created_date", 200);
-    // Each role sees registrations where approver_role matches their role
-    const mine = all.filter(r => r.approver_role === role);
+    const currentUser = await base44.auth.me();
+
+    // Find the current user's own registration to get their details (grade, class, subject)
+    const myReg = await base44.entities.Registration.filter({ user_email: currentUser.email });
+    const myData = myReg[0] || {};
+
+    let mine = [];
+    if (role === "homeroom_teacher") {
+      // Approve students/parents in their specific class
+      mine = all.filter(r =>
+        r.approver_role === "homeroom_teacher" &&
+        r.grade === myData.grade &&
+        r.class_number === myData.class_number
+      );
+    } else if (role === "grade_coordinator") {
+      // Approve homeroom teachers in their grade
+      mine = all.filter(r =>
+        r.approver_role === "grade_coordinator" &&
+        r.grade === myData.coordinator_grade
+      );
+    } else if (role === "subject_coordinator") {
+      // Approve subject teachers in their subject
+      mine = all.filter(r =>
+        r.approver_role === "subject_coordinator" &&
+        r.coordinator_subject === myData.coordinator_subject
+      );
+    } else if (role === "management") {
+      // Approve grade_coordinators, subject_coordinators, counselors
+      mine = all.filter(r => r.approver_role === "management");
+    } else {
+      mine = all.filter(r => r.approver_role === role);
+    }
+
     setRegistrations(mine);
     setLoading(false);
   };
