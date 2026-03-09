@@ -41,12 +41,18 @@ const HAIR_STYLES = ["boy", "curly", "mullet", "girl_long", "none"];
 const HAIR_STYLE_LABELS = ["ילד קצר", "מתולתל קצר", "מאלט", "ארוך בנות", "ללא שיער"];
 
 const SKIN_COLORS = [
+  { label: "לבן שנהב",  hex: "#FEECD2" },
   { label: "בהיר מאוד", hex: "#FDDBB4" },
   { label: "בהיר",      hex: "#F5C5A3" },
+  { label: "אפרסק",     hex: "#EEB98A" },
   { label: "חיטה",      hex: "#E0AC69" },
+  { label: "זהוב",      hex: "#D4915A" },
   { label: "חום בינוני",hex: "#C68642" },
+  { label: "חום",       hex: "#A0622A" },
   { label: "כהה",       hex: "#8D5524" },
-  { label: "כהה מאוד",  hex: "#4A2912" },
+  { label: "כהה מאוד",  hex: "#6B3A1F" },
+  { label: "שחום",      hex: "#4A2912" },
+  { label: "שחור עור",  hex: "#2D1A0E" },
 ];
 
 function url(filename) {
