@@ -3,27 +3,64 @@ import { base44 } from "@/api/base44Client";
 
 const BASE_URL = "https://raw.githubusercontent.com/app2class/app2classUpdated/main/";
 
-// Eye color options → base body SVG
-const EYE_COLORS = [
-  { label: "חום",       key: "brown",      hex: "#8B4513", file: "basic body brown eyes.svg" },
-  { label: "חום כהה",   key: "brown_dark", hex: "#3B1A00", file: "basic body brown dark eyes.svg" },
-  { label: "כחול",      key: "blue",       hex: "#4A90D9", file: "basic body blue eyes.svg" },
-  { label: "כחול כהה",  key: "blue_dark",  hex: "#1A3A6B", file: "basic body blue dark eyes.svg" },
-  { label: "ירוק",      key: "green",      hex: "#4CAF50", file: "basic body green eyes.svg" },
-  { label: "ירוק כהה",  key: "green_dark", hex: "#1A4A1A", file: "basic body green dark eyes.svg" },
+const BODY_TYPES = [
+  { key: "basic",  label: "רגיל",      faceFile: "base face.svg" },
+  { key: "wider",  label: "רחב",       faceFile: "wider face.svg" },
+  { key: "taller", label: "גבוה ורזה", faceFile: "thiner taller face.svg" },
 ];
 
-// Hair styles for "basic" body
-const HAIR_STYLES = [
-  { key: "boy",          label: "ילד קצר",       file: "base boy hair.svg" },
-  { key: "curly",        label: "מתולתל קצר",    file: "base face curly short hair.svg" },
-  { key: "mullet",       label: "מאלט",           file: "base mullet boy hair.svg" },
-  { key: "girl_long",    label: "ארוך בנות",      file: "girl base long hair.svg" },
-  { key: "bun",          label: "שיער קשור",      file: "basic body girl bun hair.svg" },
-  { key: "curly_long",   label: "מתולתל ארוך",   file: "basic body girl curly long hair.svg" },
-  { key: "ponytail",     label: "קוקו",           file: "basic girl ponytail hair.svg" },
-  { key: "none",         label: "ללא שיער",       file: null },
+// Eye color → body SVG per body type
+const EYE_COLORS = [
+  { label: "חום",       key: "brown",      hex: "#8B4513",
+    files: { basic: "basic body brown eyes.svg",      wider: "wide body brown eyes.svg",      taller: "tall body brown eyes.svg" } },
+  { label: "חום כהה",   key: "brown_dark", hex: "#3B1A00",
+    files: { basic: "basic body brown dark eyes.svg", wider: "wide body brown dark eyes.svg", taller: "tall body brown dark eyes.svg" } },
+  { label: "כחול",      key: "blue",       hex: "#4A90D9",
+    files: { basic: "basic body blue eyes.svg",       wider: "wide body blue eyes.svg",       taller: "tall body blue eyes.svg" } },
+  { label: "כחול כהה",  key: "blue_dark",  hex: "#1A3A6B",
+    files: { basic: "basic body blue dark eyes.svg",  wider: "wide body blue dark eyes.svg",  taller: "tall body blue dark eyes.svg" } },
+  { label: "ירוק",      key: "green",      hex: "#4CAF50",
+    files: { basic: "basic body green eyes.svg",      wider: "wide body green eyes.svg",      taller: "tall body green eyes.svg" } },
+  { label: "ירוק כהה",  key: "green_dark", hex: "#1A4A1A",
+    files: { basic: "basic body green dark eyes.svg", wider: "wide body green dark eyes.svg", taller: "tall body green dark eyes.svg" } },
 ];
+
+// Hair styles per body type
+const HAIR_STYLES_BY_BODY = {
+  basic: [
+    { key: "boy",        label: "ילד קצר",     file: "base boy hair.svg" },
+    { key: "curly",      label: "מתולתל קצר",  file: "base face curly short hair.svg" },
+    { key: "mullet",     label: "מאלט",         file: "base mullet boy hair.svg" },
+    { key: "girl_long",  label: "ארוך בנות",    file: "girl base long hair.svg" },
+    { key: "bun",        label: "שיער קשור",    file: "basic body girl bun hair.svg" },
+    { key: "curly_long", label: "מתולתל ארוך", file: "basic body girl curly long hair.svg" },
+    { key: "ponytail",   label: "קוקו",         file: "basic girl ponytail hair.svg" },
+    { key: "short_girl", label: "קצר בנות",     file: "basic girl short hair.svg" },
+    { key: "none",       label: "ללא שיער",     file: null },
+  ],
+  wider: [
+    { key: "boy",        label: "ילד קצר",     file: "wide face base boy hair.svg" },
+    { key: "curly",      label: "מתולתל קצר",  file: "wide face short curly hair.svg" },
+    { key: "mullet",     label: "מאלט",         file: "wide boy mullet hair.svg" },
+    { key: "girl_long",  label: "ארוך בנות",    file: "wide face girl long hair.svg" },
+    { key: "bun",        label: "שיער קשור",    file: "wide body girl bun hair.svg" },
+    { key: "curly_long", label: "מתולתל ארוך", file: "wide body girl curly long hair.svg" },
+    { key: "ponytail",   label: "קוקו",         file: "wide girl ponytail hair.svg" },
+    { key: "short_girl", label: "קצר בנות",     file: "wide girl short hair.svg" },
+    { key: "none",       label: "ללא שיער",     file: null },
+  ],
+  taller: [
+    { key: "boy",        label: "ילד קצר",     file: "tall face base boy hair.svg" },
+    { key: "curly",      label: "מתולתל קצר",  file: "tall face short curly hair.svg" },
+    { key: "mullet",     label: "מאלט",         file: "tall boy mullet hair.svg" },
+    { key: "girl_long",  label: "ארוך בנות",    file: "tall face girl long hair.svg" },
+    { key: "bun",        label: "שיער קשור",    file: "tall body girl bun hair.svg" },
+    { key: "curly_long", label: "מתולתל ארוך", file: "tall body girl curly long hair.svg" },
+    { key: "ponytail",   label: "קוקו",         file: "tall girl ponytail hair.svg" },
+    { key: "short_girl", label: "קצר בנות",     file: "tall girl short hair.svg" },
+    { key: "none",       label: "ללא שיער",     file: null },
+  ],
+};
 
 const SKIN_COLORS = [
   { label: "לבן שנהב",  hex: "#FEECD2" },
@@ -82,8 +119,6 @@ function hexToRgb(hex) {
 }
 
 function replaceHairColors(text, hairColor) {
-  // Replace ALL non-white, non-skin colors with the chosen hair color
-  // White/near-white (background fills) are kept, everything else becomes hair color
   const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
   const found = new Set();
   let m;
@@ -122,12 +157,6 @@ function inlineSvg(raw) {
   return raw.replace(/<svg/, '<svg style="width:100%;height:100%;object-fit:contain"');
 }
 
-const BODY_TYPES = [
-  { key: "basic",  label: "רגיל",       file: "base face.svg" },
-  { key: "wider",  label: "רחב",        file: "wider face.svg" },
-  { key: "taller", label: "גבוה ורזה",  file: "thiner taller face.svg" },
-];
-
 function AvatarPreview({ avatar }) {
   const eyeColorKey = avatar.eye_color || "brown";
   const hairStyleKey = avatar.hair_style || "boy";
@@ -136,12 +165,13 @@ function AvatarPreview({ avatar }) {
   const bodyTypeKey = avatar.body_type || "basic";
 
   const eyeEntry = EYE_COLORS.find(e => e.key === eyeColorKey) || EYE_COLORS[0];
-  const hairEntry = HAIR_STYLES.find(h => h.key === hairStyleKey) || HAIR_STYLES[0];
+  const hairStyles = HAIR_STYLES_BY_BODY[bodyTypeKey] || HAIR_STYLES_BY_BODY.basic;
+  const hairEntry = hairStyles.find(h => h.key === hairStyleKey) || hairStyles[0];
   const bodyTypeEntry = BODY_TYPES.find(b => b.key === bodyTypeKey) || BODY_TYPES[0];
 
-  const bodyUrl = url(eyeEntry.file);
+  const faceUrl = url(bodyTypeEntry.faceFile);
+  const bodyUrl = url(eyeEntry.files[bodyTypeKey] || eyeEntry.files.basic);
   const hairUrl = hairEntry.file ? url(hairEntry.file) : null;
-  const faceUrl = url(bodyTypeEntry.file);
 
   const faceSvg = useSvg(faceUrl);
   const bodySvg = useSvg(bodyUrl);
@@ -151,7 +181,6 @@ function AvatarPreview({ avatar }) {
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="relative w-44 h-44 flex items-center justify-center bg-white rounded-2xl overflow-hidden shadow-md">
-        {/* Layer 1: Face skin */}
         {faceSvg ? (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -161,7 +190,6 @@ function AvatarPreview({ avatar }) {
         ) : (
           <div className="w-16 h-16 rounded-full bg-gray-100 animate-pulse" />
         )}
-        {/* Layer 2: Body + eyes */}
         {bodySvg && (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -169,7 +197,6 @@ function AvatarPreview({ avatar }) {
             dangerouslySetInnerHTML={{ __html: inlineSvg(bodySvg) }}
           />
         )}
-        {/* Layer 3: Hair */}
         {hairSvg && (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -187,6 +214,20 @@ export default function AvatarStudio({ avatar, onChange }) {
   const update = (key, val) => onChange({ ...avatar, [key]: val });
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  const bodyTypeKey = avatar.body_type || "basic";
+  const currentHairStyles = HAIR_STYLES_BY_BODY[bodyTypeKey] || HAIR_STYLES_BY_BODY.basic;
+
+  // When body type changes, reset hair style to first option if current doesn't exist
+  const handleBodyTypeChange = (newBodyType) => {
+    const newHairStyles = HAIR_STYLES_BY_BODY[newBodyType];
+    const currentHairExists = newHairStyles.some(h => h.key === avatar.hair_style);
+    onChange({
+      ...avatar,
+      body_type: newBodyType,
+      hair_style: currentHairExists ? avatar.hair_style : newHairStyles[0].key,
+    });
+  };
 
   const handleSave = async () => {
     setSaving(true);
@@ -207,8 +248,8 @@ export default function AvatarStudio({ avatar, onChange }) {
         <label className="text-white/80 text-sm font-medium mb-2 block">סוג גוף</label>
         <div className="flex gap-2">
           {BODY_TYPES.map(({ key, label }) => (
-            <button key={key} onClick={() => update("body_type", key)}
-              className={`flex-1 py-1.5 px-2 rounded-lg border text-xs transition-all ${avatar.body_type === key || (!avatar.body_type && key === "basic") ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
+            <button key={key} onClick={() => handleBodyTypeChange(key)}
+              className={`flex-1 py-1.5 px-2 rounded-lg border text-xs transition-all ${bodyTypeKey === key ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
               {label}
             </button>
           ))}
@@ -261,7 +302,7 @@ export default function AvatarStudio({ avatar, onChange }) {
       <div>
         <label className="text-white/80 text-sm font-medium mb-2 block">סגנון שיער</label>
         <div className="grid grid-cols-4 gap-2">
-          {HAIR_STYLES.map(({ key, label }) => (
+          {currentHairStyles.map(({ key, label }) => (
             <button key={key} onClick={() => update("hair_style", key)}
               className={`py-1.5 px-1 rounded-lg border text-xs transition-all ${avatar.hair_style === key ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
               {label}
