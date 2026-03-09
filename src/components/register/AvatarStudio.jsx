@@ -137,7 +137,8 @@ function AvatarPreview({ avatar }) {
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="relative w-44 h-44 flex items-center justify-center bg-white/5 rounded-2xl overflow-hidden">
+      {/* White background so mix-blend-mode:multiply works correctly */}
+      <div className="relative w-44 h-44 flex items-center justify-center bg-white rounded-2xl overflow-hidden shadow-md">
         {bodySvg ? (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
@@ -145,11 +146,12 @@ function AvatarPreview({ avatar }) {
             dangerouslySetInnerHTML={{ __html: inlineSvg(bodySvg) }}
           />
         ) : (
-          <div className="w-16 h-16 rounded-full bg-white/10 animate-pulse" />
+          <div className="w-16 h-16 rounded-full bg-gray-100 animate-pulse" />
         )}
         {hairSvg && (
           <div
             className="absolute inset-0 w-full h-full flex items-center justify-center"
+            style={{ mixBlendMode: "multiply" }}
             dangerouslySetInnerHTML={{ __html: inlineSvg(hairSvg) }}
           />
         )}
