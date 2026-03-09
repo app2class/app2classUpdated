@@ -98,6 +98,7 @@ const ROLE_DASHBOARDS = {
       { icon: Users, label: "כוח אדם", page: "StaffCommand", color: "bg-blue-500" },
       { icon: Calendar, label: "אישור לוחות", page: "ScheduleApproval", color: "bg-orange-500" },
       { icon: Shield, label: "בקרה ורגולציה", page: "Compliance", color: "bg-red-500" },
+      { icon: CheckCircle2, label: "אישורי צוות", page: "Approvals", color: "bg-purple-500" },
     ]
   },
   admin: {
