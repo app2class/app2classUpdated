@@ -286,10 +286,8 @@ export default function Register() {
                         <p className="text-pink-300 text-xs font-bold">שכבות ייעוץ</p>
                         {counselorGrades.map((g, i) => (
                           <div key={i} className="flex gap-2">
-                            <select value={g} onChange={e => updateCounselorGrade(i, e.target.value)} className={`${inputCls} flex-1`}>
-                              <option value="">בחר שכבה</option>
-                              {GRADES.map(gr => <option key={gr} value={gr}>{gr}</option>)}
-                            </select>
+                            <CustomSelect value={g} onChange={v => updateCounselorGrade(i, v)} placeholder="בחר שכבה"
+                              options={GRADES.map(gr => ({ value: gr, label: gr }))} className="flex-1" />
                             {counselorGrades.length > 1 && (
                               <button onClick={() => removeCounselorGrade(i)} className="text-red-400 hover:text-red-300 p-2"><X className="w-4 h-4" /></button>
                             )}
