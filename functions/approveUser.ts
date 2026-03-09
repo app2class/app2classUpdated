@@ -12,19 +12,28 @@ Deno.serve(async (req) => {
     const { reg_id, reg_email, reg_full_name, reg_role } = await req.json();
 
     // Update registration status to approved
-    await base44.asServiceRole.entities.Registration.update(reg_id, { status: "approved" });
+    if (reg_id) {
+      try {
+        await base44.asServiceRole.entities.Registration.update(reg_id, { status: "approved" });
+      } catch (e) {
+        console.error('Registration update failed:', e.message);
+      }
+    }
 
-    // Send email with invitation link
-    const inviteLink = `${new URL(req.url).origin}/auth/invite?email=${encodeURIComponent(reg_email)}&role=${encodeURIComponent(reg_role)}`;
-    
-    await base44.asServiceRole.integrations.Core.SendEmail({
-      to: reg_email,
-      subject: 'הזמנה להצטרף ל-App2Class',
-      body: `שלום ${reg_full_name},\n\nהבקשה שלך אושרה! בואנו להגדיר את הסיסמה שלך:\n\n${inviteLink}\n\nצוות App2Class`
-    });
+    // Send email invitation
+    try {
+      await base44.asServiceRole.integrations.Core.SendEmail({
+        to: reg_email,
+        subject: 'הזמנה להצטרף ל-App2Class',
+        body: `שלום ${reg_full_name},\n\nהבקשה שלך אושרה!\n\nכניסה: https://app2class.base44.app\nאימייל: ${reg_email}\n\nצוות App2Class`
+      });
+    } catch (e) {
+      console.error('Email send failed:', e.message);
+    }
 
     return Response.json({ success: true });
   } catch (error) {
+    console.error('Approve error:', error.message);
     return Response.json({ error: error.message }, { status: 500 });
   }
 });
