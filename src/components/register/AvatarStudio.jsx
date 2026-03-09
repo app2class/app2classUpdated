@@ -118,12 +118,20 @@ function useHairSvg(svgUrl, hairColor) {
 }
 
 const HAIR_COLORS = [
-  { label: "שחור",     hex: "#1a0f0a" },
-  { label: "חום כהה",  hex: "#3D2314" },
-  { label: "חום",      hex: "#8B4513" },
-  { label: "ג'ינג'י",  hex: "#b5451b" },
-  { label: "בלונד",    hex: "#D4A017" },
-  { label: "אפור",     hex: "#7f8c8d" },
+  { label: "שחור",       hex: "#0D0D0D" },
+  { label: "חום כהה",    hex: "#2C1A0E" },
+  { label: "חום",        hex: "#5C3317" },
+  { label: "חום בינוני", hex: "#8B4513" },
+  { label: "חום אדמדם",  hex: "#A0522D" },
+  { label: "ג'ינג'י כהה",hex: "#8B2500" },
+  { label: "ג'ינג'י",    hex: "#C0392B" },
+  { label: "ג'ינג'י בהיר",hex: "#E8603C" },
+  { label: "בלונד כהה",  hex: "#B8860B" },
+  { label: "בלונד",      hex: "#D4A017" },
+  { label: "בלונד בהיר", hex: "#F0C040" },
+  { label: "אפור",       hex: "#808080" },
+  { label: "אפור בהיר",  hex: "#B0B0B0" },
+  { label: "לבן",        hex: "#E8E8E8" },
 ];
 
 function AvatarPreview({ avatar }) {
