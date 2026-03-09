@@ -305,14 +305,10 @@ export default function Register() {
                         <p className="text-white/80 text-xs font-bold">כיתות שאתה מלמד</p>
                         {classesTaught.map((ct, i) => (
                           <div key={i} className="flex gap-2 items-center">
-                            <select value={ct.grade} onChange={e => updateClassTaught(i, "grade", e.target.value)} className={`${inputCls} flex-1`}>
-                              <option value="">שכבה</option>
-                              {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
-                            </select>
-                            <select value={ct.class_number} onChange={e => updateClassTaught(i, "class_number", e.target.value)} className={`${inputCls} flex-1`}>
-                              <option value="">כיתה</option>
-                              {CLASS_NUMBERS.map(c => <option key={c} value={c}>{c}</option>)}
-                            </select>
+                            <CustomSelect value={ct.grade} onChange={v => updateClassTaught(i, "grade", v)} placeholder="שכבה"
+                              options={GRADES.map(g => ({ value: g, label: g }))} className="flex-1" />
+                            <CustomSelect value={ct.class_number} onChange={v => updateClassTaught(i, "class_number", v)} placeholder="כיתה"
+                              options={CLASS_NUMBERS.map(c => ({ value: c, label: c }))} className="flex-1" />
                             {classesTaught.length > 1 && (
                               <button onClick={() => removeClassTaught(i)} className="text-red-400 hover:text-red-300 p-2"><X className="w-4 h-4" /></button>
                             )}
