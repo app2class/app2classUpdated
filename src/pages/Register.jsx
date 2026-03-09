@@ -193,16 +193,12 @@ export default function Register() {
                 {roleType === "student" && (
                   <div className="grid grid-cols-2 gap-3">
                     <FormField label="שכבה" required>
-                      <select value={form.grade} onChange={e => set("grade", e.target.value)} className={inputCls}>
-                        <option value="">בחר שכבה</option>
-                        {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
-                      </select>
+                      <CustomSelect value={form.grade} onChange={v => set("grade", v)} placeholder="בחר שכבה"
+                        options={GRADES.map(g => ({ value: g, label: g }))} />
                     </FormField>
                     <FormField label="כיתה" required>
-                      <select value={form.class_number} onChange={e => set("class_number", e.target.value)} className={inputCls}>
-                        <option value="">בחר כיתה</option>
-                        {CLASS_NUMBERS.map(c => <option key={c} value={c}>{c}</option>)}
-                      </select>
+                      <CustomSelect value={form.class_number} onChange={v => set("class_number", v)} placeholder="בחר כיתה"
+                        options={CLASS_NUMBERS.map(c => ({ value: c, label: c }))} />
                     </FormField>
                   </div>
                 )}
