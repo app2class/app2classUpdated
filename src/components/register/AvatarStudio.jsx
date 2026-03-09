@@ -231,10 +231,9 @@ export default function AvatarStudio({ avatar, onChange }) {
 
   const handleSave = async () => {
     setSaving(true);
-    await base44.auth.updateMe({ avatar });
-    setSaving(false);
     setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    setSaving(false);
+    setTimeout(() => setSaved(false), 2000);
   };
 
   return (
