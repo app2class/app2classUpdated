@@ -185,10 +185,8 @@ export default function Register() {
                 </FormField>
 
                 <FormField label="בית ספר" required>
-                  <select value={form.school} onChange={e => set("school", e.target.value)} className={inputCls}>
-                    <option value="">בחר בית ספר</option>
-                    {SCHOOLS.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
+                  <CustomSelect value={form.school} onChange={v => set("school", v)} placeholder="בחר בית ספר"
+                    options={SCHOOLS.map(s => ({ value: s, label: s }))} />
                 </FormField>
 
                 {/* Student specific */}
