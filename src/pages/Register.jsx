@@ -245,14 +245,10 @@ export default function Register() {
                       <div className="border border-purple-400/30 bg-purple-400/10 rounded-xl p-3 space-y-2">
                         <p className="text-purple-300 text-xs font-bold">מחנך - כיתת חינוך</p>
                         <div className="grid grid-cols-2 gap-2">
-                          <select value={form.grade} onChange={e => set("grade", e.target.value)} className={inputCls}>
-                            <option value="">שכבה</option>
-                            {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
-                          </select>
-                          <select value={form.class_number} onChange={e => set("class_number", e.target.value)} className={inputCls}>
-                            <option value="">כיתה</option>
-                            {CLASS_NUMBERS.map(c => <option key={c} value={c}>{c}</option>)}
-                          </select>
+                          <CustomSelect value={form.grade} onChange={v => set("grade", v)} placeholder="שכבה"
+                            options={GRADES.map(g => ({ value: g, label: g }))} />
+                          <CustomSelect value={form.class_number} onChange={v => set("class_number", v)} placeholder="כיתה"
+                            options={CLASS_NUMBERS.map(c => ({ value: c, label: c }))} />
                         </div>
                       </div>
                     )}
