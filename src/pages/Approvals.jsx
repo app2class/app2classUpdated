@@ -80,6 +80,8 @@ export default function Approvals() {
 
   const handleApprove = async (reg) => {
     await base44.entities.Registration.update(reg.id, { status: "approved" });
+    // Send invitation so user can actually log in
+    await base44.users.inviteUser(reg.user_email, reg.role === "management" || reg.role === "admin" ? "admin" : "user");
     setRegistrations(prev => prev.map(r => r.id === reg.id ? { ...r, status: "approved" } : r));
   };
 
