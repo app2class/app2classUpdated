@@ -266,10 +266,8 @@ export default function Register() {
                     {selectedRoles.includes("subject_coordinator") && (
                       <div className="border border-green-400/30 bg-green-400/10 rounded-xl p-3 space-y-2">
                         <p className="text-green-300 text-xs font-bold">רכז מקצוע</p>
-                        <select value={form.coordinator_subject} onChange={e => set("coordinator_subject", e.target.value)} className={inputCls}>
-                          <option value="">בחר מקצוע</option>
-                          {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
-                        </select>
+                        <CustomSelect value={form.coordinator_subject} onChange={v => set("coordinator_subject", v)} placeholder="בחר מקצוע"
+                          options={SUBJECTS.map(s => ({ value: s, label: s }))} />
                       </div>
                     )}
 
@@ -277,10 +275,8 @@ export default function Register() {
                     {(selectedRoles.includes("subject_teacher") || selectedRoles.includes("subject_coordinator")) && (
                       <div className="border border-orange-400/30 bg-orange-400/10 rounded-xl p-3 space-y-2">
                         <p className="text-orange-300 text-xs font-bold">מקצועות הוראה</p>
-                        <select value={form.coordinator_subject} onChange={e => set("coordinator_subject", e.target.value)} className={inputCls}>
-                          <option value="">בחר מקצוע</option>
-                          {SUBJECTS.map(s => <option key={s} value={s}>{s}</option>)}
-                        </select>
+                        <CustomSelect value={form.coordinator_subject} onChange={v => set("coordinator_subject", v)} placeholder="בחר מקצוע"
+                          options={SUBJECTS.map(s => ({ value: s, label: s }))} />
                       </div>
                     )}
 
