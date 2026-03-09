@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion } from "framer-motion";
 import { GraduationCap, Users, BookOpen, Shield, ChevronLeft } from "lucide-react";
+import { base44 } from "@/api/base44Client";
 
 const roles = [
   {

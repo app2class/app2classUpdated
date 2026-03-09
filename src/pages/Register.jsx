@@ -108,6 +108,9 @@ export default function Register() {
       approver_role: (() => {
         if (roleType === "student" || roleType === "parent") return "homeroom_teacher";
         if (selectedRoles.includes("homeroom_teacher")) return "grade_coordinator";
+        if (selectedRoles.includes("subject_teacher")) return "subject_coordinator";
+        if (selectedRoles.includes("grade_coordinator") || selectedRoles.includes("subject_coordinator") || selectedRoles.includes("counselor")) return "management";
+        if (selectedRoles.includes("management")) return "admin";
         return "management";
       })(),
     };

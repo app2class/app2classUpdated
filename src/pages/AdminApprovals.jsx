@@ -33,7 +33,8 @@ export default function AdminApprovals() {
   const loadRegistrations = async () => {
     setLoading(true);
     const data = await base44.entities.Registration.list("-created_date", 100);
-    setRegistrations(data);
+    // Admin only sees registrations where approver_role === "admin" (i.e. management/school principals)
+    setRegistrations(data.filter(r => r.approver_role === "admin"));
     setLoading(false);
   };
 
