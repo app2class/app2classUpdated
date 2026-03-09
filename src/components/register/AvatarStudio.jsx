@@ -8,32 +8,32 @@ const FACE_TYPE_LABELS = ["בסיסי", "גבוה", "רחב", "רחב יותר",
 const HAIR_STYLES = ["boy", "curly_short", "mullet", "girl_long", "none"];
 const HAIR_STYLE_LABELS = ["ילד קצר", "מתולתל קצר", "מאלט", "ארוך בנות", "ללא שיער"];
 
-// Mapping face_type + hair_style → SVG filename
-const SVG_MAP = {
-  "base_boy":          "base boy hair.svg",
-  "base_curly_short":  "base face curly short hair.svg",
-  "base_mullet":       "base mullet boy hair.svg",
-  "base_girl_long":    "girl base long hair.svg",
-  "base_none":         "base face.svg",
-  "tall_boy":          "tall face base boy hair.svg",
-  "tall_mullet":       "tall boy mullet hair.svg",
-  "tall_girl_long":    "tall face girl long hair.svg",
-  "tall_curly_short":  "tall face short curly hair.svg",
-  "tall_none":         "thiner taller face.svg",
-  "wide_mullet":       "wide boy ullet hair.svg",
-  "wide_curly_short":  "wide face short curly hair.svg",
-  "wide_girl_long":    "widw face girl long hair.svg",
-  "wide_boy":          "wider face boy hair.svg",
-  "wide_none":         "wider face.svg",
-  "wider_boy":         "wider face boy hair.svg",
-  "wider_none":        "wider face.svg",
-  "thiner_taller_none":"thiner taller face.svg",
+// Face SVGs by face_type
+const FACE_SVG_MAP = {
+  "base":          "base face.svg",
+  "tall":          "thiner taller face.svg",
+  "wide":          "wider face.svg",
+  "wider":         "wider face.svg",
+  "thiner_taller": "thiner taller face.svg",
 };
 
-function getSvgUrl(face_type, hair_style) {
-  const key = `${face_type}_${hair_style}`;
-  const filename = SVG_MAP[key] || SVG_MAP[`${face_type}_none`] || SVG_MAP["base_none"];
+// Hair SVGs by hair_style (layered on top of face)
+const HAIR_SVG_MAP = {
+  "boy":         "base boy hair.svg",
+  "curly_short": "base face curly short hair.svg",
+  "mullet":      "base mullet boy hair.svg",
+  "girl_long":   "girl base long hair.svg",
+  "none":        null,
+};
+
+function getFaceUrl(face_type) {
+  const filename = FACE_SVG_MAP[face_type] || FACE_SVG_MAP["base"];
   return BASE_URL + encodeURIComponent(filename);
+}
+
+function getHairUrl(hair_style) {
+  const filename = HAIR_SVG_MAP[hair_style];
+  return filename ? BASE_URL + encodeURIComponent(filename) : null;
 }
 
 const EXPRESSIONS = ["happy", "curious", "serious", "energetic", "friendly"];
