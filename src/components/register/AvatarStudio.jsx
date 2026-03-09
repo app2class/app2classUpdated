@@ -63,13 +63,22 @@ function hexToRgb(hex) {
 }
 
 function isSkinTone({ r, g, b }) {
-  // Skin: bright warm tones — R highest, G moderate, B lower, overall bright
-  return r > 150 && r >= g && g >= b && r - b > 20 && (r + g + b) > 350;
+  // Skin tones: warm peachy/beige colors
+  // R is dominant, G is moderate, B is lowest
+  // Covers very light (#FDDBB4 = 253,219,180) to dark (#8D5524 = 141,85,36)
+  if (r < g || g < b) return false;          // must be warm (R≥G≥B)
+  if (r < 80) return false;                  // not too dark
+  if (r - b < 15) return false;              // must have warmth
+  // Exclude very saturated reds/oranges (like lips or outlines)
+  if (r > 220 && g < 100) return false;
+  // Exclude near-whites and near-greys
+  if (r > 240 && g > 230 && b > 210) return false;
+  return true;
 }
 
 function isHairColor({ r, g, b }) {
   // Hair: dark warm browns — dark overall, warm (R >= G >= B)
-  return r >= g && g >= b && (r + g + b) < 400 && r < 180 && r > 20;
+  return r >= g && g >= b && (r + g + b) < 380 && r < 170 && r > 15;
 }
 
 function replaceSvgColors(text, skinColor, hairColor) {
