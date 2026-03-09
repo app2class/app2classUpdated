@@ -257,10 +257,8 @@ export default function Register() {
                     {selectedRoles.includes("grade_coordinator") && (
                       <div className="border border-blue-400/30 bg-blue-400/10 rounded-xl p-3 space-y-2">
                         <p className="text-blue-300 text-xs font-bold">רכז שכבה</p>
-                        <select value={form.coordinator_grade} onChange={e => set("coordinator_grade", e.target.value)} className={inputCls}>
-                          <option value="">בחר שכבה</option>
-                          {GRADES.map(g => <option key={g} value={g}>{g}</option>)}
-                        </select>
+                        <CustomSelect value={form.coordinator_grade} onChange={v => set("coordinator_grade", v)} placeholder="בחר שכבה"
+                          options={GRADES.map(g => ({ value: g, label: g }))} />
                       </div>
                     )}
 
