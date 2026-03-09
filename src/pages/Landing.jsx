@@ -121,7 +121,7 @@ export default function Landing() {
             <div className="flex-1 h-px bg-white/20" />
           </div>
           <button
-            onClick={() => base44.auth.redirectToLogin(createPageUrl("Dashboard"))}
+            onClick={() => base44.auth.redirectToLogin(window.location.origin + createPageUrl("Dashboard"))}
             className="flex items-center justify-center gap-2 w-full py-3 px-6 rounded-xl border-2 border-yellow-400/60 text-yellow-400 font-bold hover:bg-yellow-400/10 transition-all duration-200"
           >
             <ChevronLeft className="w-5 h-5" />
