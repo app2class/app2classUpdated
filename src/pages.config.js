@@ -49,6 +49,7 @@
  */
 import AdminApprovals from './pages/AdminApprovals';
 import AdminLogin from './pages/AdminLogin';
+import Approvals from './pages/Approvals';
 import Assignments from './pages/Assignments';
 import Attendance from './pages/Attendance';
 import ClassOverview from './pages/ClassOverview';
@@ -63,13 +64,13 @@ import Register from './pages/Register';
 import RightsGuardian from './pages/RightsGuardian';
 import StudentRoadmap from './pages/StudentRoadmap';
 import SubjectHubs from './pages/SubjectHubs';
-import Approvals from './pages/Approvals';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "AdminApprovals": AdminApprovals,
     "AdminLogin": AdminLogin,
+    "Approvals": Approvals,
     "Assignments": Assignments,
     "Attendance": Attendance,
     "ClassOverview": ClassOverview,
@@ -84,7 +85,6 @@ export const PAGES = {
     "RightsGuardian": RightsGuardian,
     "StudentRoadmap": StudentRoadmap,
     "SubjectHubs": SubjectHubs,
-    "Approvals": Approvals,
 }
 
 export const pagesConfig = {
