@@ -43,16 +43,18 @@ const ACCESSORIES = ["none", "glasses_round", "glasses_square", "kippa", "hijab"
 const ACCESSORIES_LABELS = ["ללא", "משקפיים עגולות", "משקפיים מרובעות", "כיפה", "חיג'אב", "מטפחת"];
 
 function AvatarPreview({ avatar }) {
-  const svgUrl = getSvgUrl(avatar.face_type || "base", avatar.hair_style || "boy");
+  const faceUrl = getFaceUrl(avatar.face_type || "base");
+  const hairUrl = getHairUrl(avatar.hair_style || "boy");
 
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="relative w-36 h-36 flex items-center justify-center bg-white/5 rounded-2xl overflow-hidden">
-        <img
-          src={svgUrl}
-          alt="avatar"
-          className="w-full h-full object-contain"
-        />
+        {/* Face layer */}
+        <img src={faceUrl} alt="face" className="absolute inset-0 w-full h-full object-contain" />
+        {/* Hair layer on top */}
+        {hairUrl && (
+          <img src={hairUrl} alt="hair" className="absolute inset-0 w-full h-full object-contain" />
+        )}
       </div>
       <p className="text-white/60 text-xs">תצוגה מקדימה</p>
     </div>
