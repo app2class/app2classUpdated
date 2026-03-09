@@ -186,6 +186,16 @@ function AvatarPreview({ avatar }) {
 
 export default function AvatarStudio({ avatar, onChange }) {
   const update = (key, val) => onChange({ ...avatar, [key]: val });
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    await base44.auth.updateMe({ avatar });
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  };
 
   const faceType = avatar.face_type || "base";
 
