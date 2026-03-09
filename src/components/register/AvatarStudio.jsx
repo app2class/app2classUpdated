@@ -63,60 +63,67 @@ function hexToRgb(hex) {
 }
 
 function isSkinTone({ r, g, b }) {
-  // Skin tones: warm peachy/beige colors
-  // R is dominant, G is moderate, B is lowest
-  // Covers very light (#FDDBB4 = 253,219,180) to dark (#8D5524 = 141,85,36)
-  if (r < g || g < b) return false;          // must be warm (R≥G≥B)
-  if (r < 80) return false;                  // not too dark
-  if (r - b < 15) return false;              // must have warmth
-  // Exclude very saturated reds/oranges (like lips or outlines)
+  if (r < g || g < b) return false;
+  if (r < 80) return false;
+  if (r - b < 15) return false;
   if (r > 220 && g < 100) return false;
-  // Exclude near-whites and near-greys
   if (r > 240 && g > 230 && b > 210) return false;
   return true;
 }
 
-function isHairColor({ r, g, b }) {
-  // Hair: dark warm browns — dark overall, warm (R >= G >= B)
-  return r >= g && g >= b && (r + g + b) < 380 && r < 170 && r > 15;
-}
-
-function replaceSvgColors(text, skinColor, hairColor) {
-  // Find all unique hex colors in the SVG
+// For face SVGs: replace skin tones only
+function replaceFaceColors(text, skinColor) {
   const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
   const found = new Set();
   let m;
   while ((m = hexRegex.exec(text)) !== null) found.add(m[1].toUpperCase());
 
-  console.log("SVG colors found:", [...found].map(h => {
-    const rgb = hexToRgb(h);
-    return `#${h} skin=${isSkinTone(rgb)} hair=${isHairColor(rgb)}`;
-  }));
+  let result = text;
+  for (const hex of found) {
+    if (isSkinTone(hexToRgb(hex))) {
+      result = result.replace(new RegExp(`#${hex}`, "gi"), skinColor);
+    }
+  }
+  return result;
+}
+
+// For hair SVGs: replace ALL colored fills with hair color (keep only near-black outlines and near-white/transparent)
+function replaceHairColors(text, hairColor) {
+  const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
+  const found = new Set();
+  let m;
+  while ((m = hexRegex.exec(text)) !== null) found.add(m[1].toUpperCase());
 
   let result = text;
   for (const hex of found) {
-    const rgb = hexToRgb(hex);
-    if (isSkinTone(rgb)) {
-      result = result.replace(new RegExp(`#${hex}`, "gi"), skinColor);
-    } else if (hairColor && isHairColor(rgb)) {
+    const { r, g, b } = hexToRgb(hex);
+    const sum = r + g + b;
+    const isVeryDark = sum < 80;                                          // keep outlines
+    const isVeryLight = r > 230 && g > 230 && b > 230;                  // keep near-whites
+    const isNeutralGrey = Math.abs(r - g) < 12 && Math.abs(g - b) < 12; // keep greys
+    if (!isVeryDark && !isVeryLight && !isNeutralGrey) {
       result = result.replace(new RegExp(`#${hex}`, "gi"), hairColor);
     }
   }
   return result;
 }
 
-function useSvgWithColors(svgUrl, skinColor, hairColor) {
-  const [svgContent, setSvgContent] = useState("");
-
+function useFaceSvg(svgUrl, skinColor) {
+  const [content, setContent] = useState("");
   useEffect(() => {
-    if (!svgUrl) { setSvgContent(""); return; }
-    fetch(svgUrl)
-      .then(r => r.text())
-      .then(text => setSvgContent(replaceSvgColors(text, skinColor, hairColor)))
-      .catch(() => setSvgContent(""));
-  }, [svgUrl, skinColor, hairColor]);
+    if (!svgUrl) { setContent(""); return; }
+    fetch(svgUrl).then(r => r.text()).then(text => setContent(replaceFaceColors(text, skinColor))).catch(() => setContent(""));
+  }, [svgUrl, skinColor]);
+  return content;
+}
 
-  return svgContent;
+function useHairSvg(svgUrl, hairColor) {
+  const [content, setContent] = useState("");
+  useEffect(() => {
+    if (!svgUrl) { setContent(""); return; }
+    fetch(svgUrl).then(r => r.text()).then(text => setContent(replaceHairColors(text, hairColor))).catch(() => setContent(""));
+  }, [svgUrl, hairColor]);
+  return content;
 }
 
 const HAIR_COLORS = [
