@@ -202,6 +202,19 @@ export default function AvatarStudio({ avatar, onChange }) {
         <AvatarPreview avatar={avatar} />
       </div>
 
+      {/* Body Type */}
+      <div>
+        <label className="text-white/80 text-sm font-medium mb-2 block">סוג גוף</label>
+        <div className="flex gap-2">
+          {BODY_TYPES.map(({ key, label }) => (
+            <button key={key} onClick={() => update("body_type", key)}
+              className={`flex-1 py-1.5 px-2 rounded-lg border text-xs transition-all ${avatar.body_type === key || (!avatar.body_type && key === "basic") ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Eye Color */}
       <div>
         <label className="text-white/80 text-sm font-medium mb-2 block">צבע עיניים</label>
