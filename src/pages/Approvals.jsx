@@ -79,18 +79,8 @@ export default function Approvals() {
   };
 
   const handleApprove = async (reg) => {
-    try {
-      await base44.functions.invoke('approveUser', {
-        reg_id: reg.id,
-        reg_email: reg.user_email,
-        reg_full_name: reg.full_name,
-        reg_role: reg.role
-      });
-      setRegistrations(prev => prev.map(r => r.id === reg.id ? { ...r, status: "approved" } : r));
-    } catch (err) {
-      console.error('Approve failed:', err);
-      alert('שגיאה באישור הבקשה');
-    }
+    await base44.entities.Registration.update(reg.id, { status: "approved" });
+    setRegistrations(prev => prev.map(r => r.id === reg.id ? { ...r, status: "approved" } : r));
   };
 
   const handleReject = async (reg) => {
