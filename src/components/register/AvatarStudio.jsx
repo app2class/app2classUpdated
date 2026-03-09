@@ -49,41 +49,45 @@ const SKIN_COLORS = [
   { label: "כהה מאוד",  hex: "#4A2912" },
 ];
 
-// Known skin tones used in the SVG files
-const SKIN_HEX_VARIANTS = [
-  "FDDBB4", "F5C5A3", "EAB88C", "E8B48A", "F2C18C", "EDBD9A",
-  "D4956A", "C8885F", "C68642", "A0693A", "8D5524", "4A2912",
-  // common SVG skin palette
-  "FFD5B0", "FFCBA4", "F7C59F", "F0B27A", "E59866", "CA9B6E",
-  "BA8D6A", "A97C50", "8B6143", "6F4E37",
-];
-
-// Known hair colors used in SVG files
-const HAIR_HEX_VARIANTS = [
-  "3D2314", "4A2E1A", "5C3317", "6B3A2A", "7B4F3A",
-  "8B4513", "704214", "5D3010", "2C1810", "1A0F0A",
-  "3B2314", "6B4226", "8B6348",
-];
-
 function url(filename) {
   return BASE_URL + encodeURIComponent(filename);
 }
 
+function hexToRgb(hex) {
+  const h = hex.replace('#', '');
+  return {
+    r: parseInt(h.substr(0, 2), 16),
+    g: parseInt(h.substr(2, 2), 16),
+    b: parseInt(h.substr(4, 2), 16),
+  };
+}
+
+function isSkinTone({ r, g, b }) {
+  // Skin: warm, reddish-beige. R is highest, G moderate, B low-ish.
+  return r > 120 && g > 60 && b > 30 && r > g && g > b && r - b > 40 && r < 255;
+}
+
+function isHairColor({ r, g, b }) {
+  // Hair: dark warm browns — low values, red slightly dominant
+  return r < 160 && r >= g && g >= b && r - b > 5 && r + g + b < 350;
+}
+
 function replaceSvgColors(text, skinColor, hairColor) {
+  // Find all unique hex colors in the SVG
+  const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
+  const found = new Set();
+  let m;
+  while ((m = hexRegex.exec(text)) !== null) found.add(m[1].toUpperCase());
+
   let result = text;
-
-  // Replace ALL skin tone variants with the chosen skin color
-  for (const variant of SKIN_HEX_VARIANTS) {
-    result = result.replace(new RegExp(`#${variant}`, "gi"), skinColor);
-  }
-
-  // Replace ALL hair color variants with the chosen hair color
-  if (hairColor) {
-    for (const variant of HAIR_HEX_VARIANTS) {
-      result = result.replace(new RegExp(`#${variant}`, "gi"), hairColor);
+  for (const hex of found) {
+    const rgb = hexToRgb(hex);
+    if (isSkinTone(rgb)) {
+      result = result.replace(new RegExp(`#${hex}`, "gi"), skinColor);
+    } else if (hairColor && isHairColor(rgb)) {
+      result = result.replace(new RegExp(`#${hex}`, "gi"), hairColor);
     }
   }
-
   return result;
 }
 
