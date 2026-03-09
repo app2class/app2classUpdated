@@ -156,20 +156,7 @@ export default function Register() {
                 </FormField>
 
                 <FormField label="אימייל" required>
-                  <div className="relative">
-                    <input type="text" value={form.email} onChange={e => handleEmailChange(e.target.value)}
-                      className={inputCls} placeholder="example@gmail.com" />
-                    {emailSuggs.length > 0 && (
-                      <div className="absolute top-full right-0 left-0 mt-1 bg-slate-800 border border-white/20 rounded-xl overflow-hidden z-10">
-                        {emailSuggs.map(s => (
-                          <button key={s} onClick={() => { set("email", s); setEmailSuggs([]); }}
-                            className="w-full text-right px-4 py-2 text-white/80 hover:bg-white/10 text-sm transition-colors">
-                            {s}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  <EmailInput value={form.email} onChange={v => set("email", v)} className={inputCls} />
                 </FormField>
 
                 <FormField label="סיסמה" required>
