@@ -21,14 +21,18 @@ Deno.serve(async (req) => {
     }
 
     // Send email invitation
+    const emailBody = `שלום ${reg_full_name},\n\nהבקשה שלך אושרה!\n\nכניסה: https://app2class.base44.app\nאימייל: ${reg_email}\n\nצוות App2Class`;
+    
     try {
-      await base44.asServiceRole.integrations.Core.SendEmail({
+      const emailRes = await base44.asServiceRole.integrations.Core.SendEmail({
         to: reg_email,
         subject: 'הזמנה להצטרף ל-App2Class',
-        body: `שלום ${reg_full_name},\n\nהבקשה שלך אושרה!\n\nכניסה: https://app2class.base44.app\nאימייל: ${reg_email}\n\nצוות App2Class`
+        body: emailBody
       });
+      console.log('Email sent:', emailRes);
     } catch (e) {
       console.error('Email send failed:', e.message);
+      throw e;
     }
 
     return Response.json({ success: true });
