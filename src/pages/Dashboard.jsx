@@ -46,6 +46,7 @@ const ROLE_DASHBOARDS = {
       { icon: MessageSquare, label: "תקשורת עם הורים", page: "ParentTeacherComm", color: "bg-teal-500" },
       { icon: Calendar, label: "לוח מבחנים", page: "ExamCalendar", color: "bg-orange-500" },
       { icon: Heart, label: "רווחה ויועצת", page: "WellnessSync", color: "bg-pink-500" },
+      { icon: CheckCircle2, label: "אישורי תלמידים/הורים", page: "Approvals", color: "bg-yellow-500" },
     ]
   },
   subject_teacher: {
