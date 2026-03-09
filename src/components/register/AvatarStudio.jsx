@@ -107,16 +107,26 @@ function useSvgWithColors(svgUrl, skinColor, hairColor) {
   return svgContent;
 }
 
+const HAIR_COLORS = [
+  { label: "שחור",     hex: "#1a0f0a" },
+  { label: "חום כהה",  hex: "#3D2314" },
+  { label: "חום",      hex: "#8B4513" },
+  { label: "ג'ינג'י",  hex: "#b5451b" },
+  { label: "בלונד",    hex: "#D4A017" },
+  { label: "אפור",     hex: "#7f8c8d" },
+];
+
 function AvatarPreview({ avatar }) {
   const faceType = avatar.face_type || "base";
   const hairStyle = avatar.hair_style || "boy";
   const skinColor = avatar.skin || "#FDDBB4";
+  const hairColor = avatar.hair_color || "#3D2314";
 
   const faceFilename = FACE_SVG_MAP[faceType];
   const hairFilename = HAIR_SVG_MAP[faceType]?.[hairStyle] || null;
 
-  const faceSvg = useSvgWithSkin(faceFilename ? url(faceFilename) : null, skinColor);
-  const hairSvg = useSvgWithSkin(hairFilename ? url(hairFilename) : null, skinColor);
+  const faceSvg = useSvgWithColors(faceFilename ? url(faceFilename) : null, skinColor, hairColor);
+  const hairSvg = useSvgWithColors(hairFilename ? url(hairFilename) : null, skinColor, hairColor);
 
   return (
     <div className="flex flex-col items-center gap-2">
