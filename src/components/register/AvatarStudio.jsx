@@ -1,67 +1,58 @@
 import { useState } from "react";
 
-const SKIN_COLORS = ["#FDDBB4", "#F1C27D", "#E0AC69", "#C68642", "#8D5524", "#4A2912"];
-const HAIR_COLORS = ["#1a1a1a", "#4a3728", "#8B4513", "#D4A017", "#F5CBA7", "#C0C0C0", "#FFFFFF", "#4169E1", "#FF69B4"];
-const HAIR_STYLES = ["short_straight", "short_curly", "medium_wavy", "long_straight", "long_curly", "bun", "ponytail", "bald", "afro"];
-const HAIR_STYLE_LABELS = ["קצר ישר", "קצר מתולתל", "בינוני גלי", "ארוך ישר", "ארוך מתולתל", "קוקו גבוה", "זנב סוס", "קרח", "אפרו"];
+const BASE_URL = "https://raw.githubusercontent.com/app2class/app2classUpdated/main/";
+
+const FACE_TYPES = ["base", "tall", "wide", "wider", "thiner_taller"];
+const FACE_TYPE_LABELS = ["בסיסי", "גבוה", "רחב", "רחב יותר", "דק וגבוה"];
+
+const HAIR_STYLES = ["boy", "curly_short", "mullet", "girl_long", "none"];
+const HAIR_STYLE_LABELS = ["ילד קצר", "מתולתל קצר", "מאלט", "ארוך בנות", "ללא שיער"];
+
+// Mapping face_type + hair_style → SVG filename
+const SVG_MAP = {
+  "base_boy":          "base boy hair.svg",
+  "base_curly_short":  "base face curly short hair.svg",
+  "base_mullet":       "base mullet boy hair.svg",
+  "base_girl_long":    "girl base long hair.svg",
+  "base_none":         "base face.svg",
+  "tall_boy":          "tall face base boy hair.svg",
+  "tall_mullet":       "tall boy mullet hair.svg",
+  "tall_girl_long":    "tall face girl long hair.svg",
+  "tall_curly_short":  "tall face short curly hair.svg",
+  "tall_none":         "thiner taller face.svg",
+  "wide_mullet":       "wide boy ullet hair.svg",
+  "wide_curly_short":  "wide face short curly hair.svg",
+  "wide_girl_long":    "widw face girl long hair.svg",
+  "wide_boy":          "wider face boy hair.svg",
+  "wide_none":         "wider face.svg",
+  "wider_boy":         "wider face boy hair.svg",
+  "wider_none":        "wider face.svg",
+  "thiner_taller_none":"thiner taller face.svg",
+};
+
+function getSvgUrl(face_type, hair_style) {
+  const key = `${face_type}_${hair_style}`;
+  const filename = SVG_MAP[key] || SVG_MAP[`${face_type}_none`] || SVG_MAP["base_none"];
+  return BASE_URL + encodeURIComponent(filename);
+}
+
 const EXPRESSIONS = ["happy", "curious", "serious", "energetic", "friendly"];
 const EXPRESSION_LABELS = ["חיוכי", "סקרן", "רציני", "אנרגטי", "ידידותי"];
 const EXPRESSION_EMOJIS = ["😊", "🤔", "😐", "⚡", "🙂"];
-const FACE_TYPES = ["young", "adult"];
 const ACCESSORIES = ["none", "glasses_round", "glasses_square", "kippa", "hijab", "turban"];
 const ACCESSORIES_LABELS = ["ללא", "משקפיים עגולות", "משקפיים מרובעות", "כיפה", "חיג'אב", "מטפחת"];
 
 function AvatarPreview({ avatar }) {
-  const skin = avatar.skin || "#F1C27D";
-  const hairColor = avatar.hair_color || "#1a1a1a";
+  const svgUrl = getSvgUrl(avatar.face_type || "base", avatar.hair_style || "boy");
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <div className="relative">
-        <svg width="120" height="140" viewBox="0 0 120 140">
-          {/* Hair back */}
-          {avatar.hair_style !== "bald" && (
-            <ellipse cx="60" cy="42" rx="38" ry="36" fill={hairColor} />
-          )}
-          {/* Face */}
-          <ellipse cx="60" cy="55" rx={avatar.face_type === "young" ? 32 : 30} ry={avatar.face_type === "young" ? 36 : 34} fill={skin} />
-          {/* Eyes */}
-          <ellipse cx="48" cy="50" rx="4" ry="4.5" fill="#333" />
-          <ellipse cx="72" cy="50" rx="4" ry="4.5" fill="#333" />
-          <ellipse cx="48" cy="48.5" rx="1.5" ry="1.5" fill="white" />
-          <ellipse cx="72" cy="48.5" rx="1.5" ry="1.5" fill="white" />
-          {/* Expression */}
-          {avatar.expression === "happy" && <path d="M50 64 Q60 72 70 64" stroke="#333" strokeWidth="2" fill="none" strokeLinecap="round" />}
-          {avatar.expression === "serious" && <line x1="50" y1="66" x2="70" y2="66" stroke="#333" strokeWidth="2" strokeLinecap="round" />}
-          {(avatar.expression === "curious" || avatar.expression === "energetic" || avatar.expression === "friendly") && <path d="M50 64 Q60 70 70 64" stroke="#333" strokeWidth="2" fill="none" strokeLinecap="round" />}
-          {/* Nose */}
-          <ellipse cx="60" cy="58" rx="3" ry="2" fill={skin} stroke="#d4956a" strokeWidth="1" />
-          {/* Accessories */}
-          {avatar.accessory === "glasses_round" && (
-            <g stroke="#555" strokeWidth="1.5" fill="none">
-              <circle cx="48" cy="50" r="8" />
-              <circle cx="72" cy="50" r="8" />
-              <line x1="56" y1="50" x2="64" y2="50" />
-            </g>
-          )}
-          {avatar.accessory === "glasses_square" && (
-            <g stroke="#555" strokeWidth="1.5" fill="none">
-              <rect x="40" y="43" width="16" height="14" rx="2" />
-              <rect x="64" y="43" width="16" height="14" rx="2" />
-              <line x1="56" y1="50" x2="64" y2="50" />
-            </g>
-          )}
-          {avatar.accessory === "kippa" && <ellipse cx="60" cy="26" rx="20" ry="12" fill={hairColor} />}
-          {avatar.accessory === "hijab" && <ellipse cx="60" cy="38" rx="42" ry="32" fill={hairColor} opacity="0.85" />}
-          {avatar.accessory === "turban" && <rect x="22" y="20" width="76" height="30" rx="15" fill={hairColor} />}
-          {/* Neck */}
-          <rect x="52" y="88" width="16" height="14" fill={skin} />
-          {/* Body */}
-          <rect x="28" y="100" width="64" height="40" rx="10" fill="#4169E1" />
-          {/* Hair front details */}
-          {avatar.hair_style === "ponytail" && <ellipse cx="60" cy="22" rx="8" ry="20" fill={hairColor} />}
-          {avatar.hair_style === "bun" && <ellipse cx="60" cy="20" rx="12" ry="10" fill={hairColor} />}
-        </svg>
+      <div className="relative w-36 h-36 flex items-center justify-center bg-white/5 rounded-2xl overflow-hidden">
+        <img
+          src={svgUrl}
+          alt="avatar"
+          className="w-full h-full object-contain"
+        />
       </div>
       <p className="text-white/60 text-xs">תצוגה מקדימה</p>
     </div>
