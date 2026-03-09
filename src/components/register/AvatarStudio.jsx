@@ -62,32 +62,18 @@ function hexToRgb(hex) {
   };
 }
 
-function isSkinTone({ r, g, b }) {
-  if (r < g || g < b) return false;
-  if (r < 80) return false;
-  if (r - b < 15) return false;
-  if (r > 220 && g < 100) return false;
-  if (r > 240 && g > 230 && b > 210) return false;
-  return true;
-}
+// Face SVGs contain embedded PNG images — we use CSS filter to tint skin tone
+// Base face has a light-peach skin tone baked in
+const SKIN_CSS_FILTER = {
+  "#FDDBB4": "brightness(1.08) saturate(0.8)",
+  "#F5C5A3": "brightness(1.0) saturate(1.0)",
+  "#E0AC69": "sepia(0.3) saturate(1.4) brightness(0.9)",
+  "#C68642": "sepia(0.55) saturate(2) brightness(0.78)",
+  "#8D5524": "sepia(0.75) saturate(2.2) brightness(0.55)",
+  "#4A2912": "sepia(0.9) saturate(2) brightness(0.32)",
+};
 
-// For face SVGs: replace skin tones only
-function replaceFaceColors(text, skinColor) {
-  const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
-  const found = new Set();
-  let m;
-  while ((m = hexRegex.exec(text)) !== null) found.add(m[1].toUpperCase());
-
-  let result = text;
-  for (const hex of found) {
-    if (isSkinTone(hexToRgb(hex))) {
-      result = result.replace(new RegExp(`#${hex}`, "gi"), skinColor);
-    }
-  }
-  return result;
-}
-
-// For hair SVGs: replace ALL colored fills with hair color (keep only near-black outlines and near-white/transparent)
+// For hair SVGs: replace ALL colored fills with hair color (keep only near-black outlines)
 function replaceHairColors(text, hairColor) {
   const hexRegex = /#([0-9A-Fa-f]{6})\b/g;
   const found = new Set();
@@ -98,22 +84,21 @@ function replaceHairColors(text, hairColor) {
   for (const hex of found) {
     const { r, g, b } = hexToRgb(hex);
     const sum = r + g + b;
-    const isVeryDark = sum < 80;                                          // keep outlines
-    const isVeryLight = r > 230 && g > 230 && b > 230;                  // keep near-whites
-    const isNeutralGrey = Math.abs(r - g) < 12 && Math.abs(g - b) < 12; // keep greys
-    if (!isVeryDark && !isVeryLight && !isNeutralGrey) {
+    const isVeryDark = sum < 80;
+    const isVeryLight = r > 230 && g > 230 && b > 230;
+    if (!isVeryDark && !isVeryLight) {
       result = result.replace(new RegExp(`#${hex}`, "gi"), hairColor);
     }
   }
   return result;
 }
 
-function useFaceSvg(svgUrl, skinColor) {
+function useFaceSvg(svgUrl) {
   const [content, setContent] = useState("");
   useEffect(() => {
     if (!svgUrl) { setContent(""); return; }
-    fetch(svgUrl).then(r => r.text()).then(text => setContent(replaceFaceColors(text, skinColor))).catch(() => setContent(""));
-  }, [svgUrl, skinColor]);
+    fetch(svgUrl).then(r => r.text()).then(text => setContent(text)).catch(() => setContent(""));
+  }, [svgUrl]);
   return content;
 }
 
