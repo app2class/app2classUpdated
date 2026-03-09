@@ -71,22 +71,16 @@ function url(filename) {
 
 function replaceSvgColors(text, skinColor, hairColor) {
   let result = text;
-  const skinHex = skinColor.replace("#", "").toUpperCase();
-  const hairHex = hairColor ? hairColor.replace("#", "").toUpperCase() : null;
 
-  // Replace skin tones
+  // Replace ALL skin tone variants with the chosen skin color
   for (const variant of SKIN_HEX_VARIANTS) {
-    const upper = variant.toUpperCase();
-    result = result.replace(new RegExp(`#${upper}`, "gi"), skinColor);
-    result = result.replace(new RegExp(`${upper}(?=[^a-fA-F0-9]|$)`, "g"), skinHex);
+    result = result.replace(new RegExp(`#${variant}`, "gi"), skinColor);
   }
 
-  // Replace hair colors
-  if (hairHex) {
+  // Replace ALL hair color variants with the chosen hair color
+  if (hairColor) {
     for (const variant of HAIR_HEX_VARIANTS) {
-      const upper = variant.toUpperCase();
-      result = result.replace(new RegExp(`#${upper}`, "gi"), hairColor);
-      result = result.replace(new RegExp(`${upper}(?=[^a-fA-F0-9]|$)`, "g"), hairHex);
+      result = result.replace(new RegExp(`#${variant}`, "gi"), hairColor);
     }
   }
 
