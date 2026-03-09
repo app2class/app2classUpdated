@@ -71,24 +71,12 @@ export default function AvatarStudio({ avatar, onChange }) {
       {/* Face Type */}
       <div>
         <label className="text-white/80 text-sm font-medium mb-2 block">מבנה פנים</label>
-        <div className="flex gap-3">
+        <div className="grid grid-cols-3 gap-2">
           {FACE_TYPES.map((ft, i) => (
             <button key={ft} onClick={() => update("face_type", ft)}
-              className={`flex-1 py-2 rounded-xl border-2 text-sm font-medium transition-all ${avatar.face_type === ft ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
-              {i === 0 ? "צעיר" : "בוגר"}
+              className={`py-1.5 px-2 rounded-xl border-2 text-xs font-medium transition-all ${avatar.face_type === ft ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
+              {FACE_TYPE_LABELS[i]}
             </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Skin */}
-      <div>
-        <label className="text-white/80 text-sm font-medium mb-2 block">גוון עור</label>
-        <div className="flex gap-2 flex-wrap">
-          {SKIN_COLORS.map(c => (
-            <button key={c} onClick={() => update("skin", c)}
-              className={`w-9 h-9 rounded-full border-3 transition-all ${avatar.skin === c ? "border-yellow-400 scale-110 shadow-lg" : "border-white/30 hover:scale-105"}`}
-              style={{ backgroundColor: c, borderWidth: avatar.skin === c ? 3 : 2 }} />
           ))}
         </div>
       </div>
@@ -102,18 +90,6 @@ export default function AvatarStudio({ avatar, onChange }) {
               className={`py-1.5 px-2 rounded-lg border text-xs transition-all ${avatar.hair_style === s ? "border-yellow-400 bg-yellow-400/20 text-yellow-400" : "border-white/20 text-white/60 hover:border-white/40"}`}>
               {HAIR_STYLE_LABELS[i]}
             </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Hair Color */}
-      <div>
-        <label className="text-white/80 text-sm font-medium mb-2 block">צבע שיער</label>
-        <div className="flex gap-2 flex-wrap">
-          {HAIR_COLORS.map(c => (
-            <button key={c} onClick={() => update("hair_color", c)}
-              className={`w-8 h-8 rounded-full transition-all ${avatar.hair_color === c ? "scale-110 shadow-lg" : "hover:scale-105"}`}
-              style={{ backgroundColor: c, border: avatar.hair_color === c ? "3px solid #FBBF24" : "2px solid rgba(255,255,255,0.3)" }} />
           ))}
         </div>
       </div>
