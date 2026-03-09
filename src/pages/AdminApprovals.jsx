@@ -23,6 +23,13 @@ export default function AdminApprovals() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("pending");
 
+  // Guard: must be logged in as admin
+  useEffect(() => {
+    if (!sessionStorage.getItem("adminLoggedIn")) {
+      navigate(createPageUrl("AdminLogin"));
+    }
+  }, []);
+
   const loadRegistrations = async () => {
     setLoading(true);
     const data = await base44.entities.Registration.list("-created_date", 100);
