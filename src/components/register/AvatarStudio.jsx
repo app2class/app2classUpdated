@@ -140,7 +140,7 @@ function AvatarPreview({ avatar }) {
         {faceSvg && (
           <div
             className="absolute inset-0 w-full h-full"
-            style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{ display: "flex", alignItems: "center", justifyContent: "center", filter: skinFilter }}
             dangerouslySetInnerHTML={{ __html: faceSvg
               .replace(/<svg/, '<svg style="width:100%;height:100%;object-fit:contain"') }}
           />
