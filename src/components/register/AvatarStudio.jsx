@@ -122,21 +122,28 @@ function inlineSvg(raw) {
   return raw.replace(/<svg/, '<svg style="width:100%;height:100%;object-fit:contain"');
 }
 
-const FACE_URL = BASE_URL + "base%20face.svg";
+const BODY_TYPES = [
+  { key: "basic",  label: "רגיל",       file: "base face.svg" },
+  { key: "wider",  label: "רחב",        file: "wider face.svg" },
+  { key: "taller", label: "גבוה ורזה",  file: "thiner taller face.svg" },
+];
 
 function AvatarPreview({ avatar }) {
   const eyeColorKey = avatar.eye_color || "brown";
   const hairStyleKey = avatar.hair_style || "boy";
   const skinColor = avatar.skin || "#FDDBB4";
   const hairColor = avatar.hair_color || "#2C1A0E";
+  const bodyTypeKey = avatar.body_type || "basic";
 
   const eyeEntry = EYE_COLORS.find(e => e.key === eyeColorKey) || EYE_COLORS[0];
   const hairEntry = HAIR_STYLES.find(h => h.key === hairStyleKey) || HAIR_STYLES[0];
+  const bodyTypeEntry = BODY_TYPES.find(b => b.key === bodyTypeKey) || BODY_TYPES[0];
 
   const bodyUrl = url(eyeEntry.file);
   const hairUrl = hairEntry.file ? url(hairEntry.file) : null;
+  const faceUrl = url(bodyTypeEntry.file);
 
-  const faceSvg = useSvg(FACE_URL);
+  const faceSvg = useSvg(faceUrl);
   const bodySvg = useSvg(bodyUrl);
   const hairSvg = useHairSvg(hairUrl, hairColor);
   const skinFilter = SKIN_CSS_FILTER[skinColor] || SKIN_CSS_FILTER["#F5C5A3"];
