@@ -6,6 +6,7 @@ import { base44 } from "@/api/base44Client";
 import { ChevronRight, ChevronLeft, Plus, X } from "lucide-react";
 import StepIndicator from "../components/register/StepIndicator";
 import AvatarStudio from "../components/register/AvatarStudio";
+import EmailInput from "../components/ui/EmailInput";
 
 const SCHOOLS = ["תיכון חדש תל אביב", "תיכון בן צבי קריית אונו", "בית ספר אהבת ציון", "תיכון ליד\"ה ירושלים"];
 const GRADES = ["ז'", "ח'", "ט'", "י'", "י\"א", "י\"ב"];
