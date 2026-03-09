@@ -215,6 +215,27 @@ export default function AvatarStudio({ avatar, onChange }) {
           ))}
         </div>
       </div>
+
+      {/* Hair Color */}
+      <div>
+        <label className="text-white/80 text-sm font-medium mb-2 block">צבע שיער</label>
+        <div className="flex gap-2 flex-wrap">
+          {HAIR_COLORS.map(({ hex, label }) => (
+            <button
+              key={hex}
+              title={label}
+              onClick={() => update("hair_color", hex)}
+              className="w-9 h-9 rounded-full transition-all hover:scale-110"
+              style={{
+                backgroundColor: hex,
+                border: avatar.hair_color === hex ? "3px solid #FBBF24" : "2px solid rgba(255,255,255,0.3)",
+                transform: avatar.hair_color === hex ? "scale(1.15)" : undefined,
+                boxShadow: avatar.hair_color === hex ? "0 0 8px #FBBF2488" : undefined,
+              }}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
