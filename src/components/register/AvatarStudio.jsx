@@ -88,6 +88,11 @@ function replaceSvgColors(text, skinColor, hairColor) {
   let m;
   while ((m = hexRegex.exec(text)) !== null) found.add(m[1].toUpperCase());
 
+  console.log("SVG colors found:", [...found].map(h => {
+    const rgb = hexToRgb(h);
+    return `#${h} skin=${isSkinTone(rgb)} hair=${isHairColor(rgb)}`;
+  }));
+
   let result = text;
   for (const hex of found) {
     const rgb = hexToRgb(hex);
