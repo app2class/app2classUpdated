@@ -272,6 +272,21 @@ export default function AvatarStudio({ avatar, onChange }) {
           ))}
         </div>
       </div>
+
+      {/* Save Button */}
+      <div className="pt-2">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className={`w-full py-3 rounded-xl font-bold text-sm transition-all ${
+            saved
+              ? "bg-green-500 text-white"
+              : "bg-yellow-400 hover:bg-yellow-300 text-slate-900"
+          } disabled:opacity-60`}
+        >
+          {saving ? "שומר..." : saved ? "✓ האווטאר עודכן בהצלחה!" : "שמור אווטאר"}
+        </button>
+      </div>
     </div>
   );
 }
